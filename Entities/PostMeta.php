@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArrayAccess\TrayDigita\App\Modules\Posts\Entities;
 
+use AllowDynamicProperties;
 use ArrayAccess\TrayDigita\Database\Entities\Abstracts\AbstractBasedMeta;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
+#[AllowDynamicProperties] #[Entity]
 #[Table(
     name: self::TABLE_NAME,
     options: [
@@ -29,12 +30,12 @@ use Doctrine\ORM\Mapping\Table;
     ]
 )]
 #[Index(
-    columns: ['name'],
-    name: 'index_name'
+    name: 'index_name',
+    columns: ['name']
 )]
 #[Index(
-    columns: ['post_id'],
-    name: 'relation_post_meta_post_id_posts_id'
+    name: 'relation_post_meta_post_id_posts_id',
+    columns: ['post_id']
 )]
 #[HasLifecycleCallbacks]
 /**
@@ -74,7 +75,7 @@ class PostMeta extends AbstractBasedMeta
             cascade: [
                 "persist",
                 "remove",
-                "merge",
+                // "merge",
                 "detach"
             ],
             fetch: 'EAGER'

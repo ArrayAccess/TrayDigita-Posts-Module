@@ -72,15 +72,16 @@ use function trim;
     columns: ['slug', 'site_id']
 )]
 #[Index(
+    name: 'index_type_status_id_site_id',
     columns: [
         'type',
         'status',
         'site_id',
         'id',
-    ],
-    name: 'index_type_status_id_site_id'
+    ]
 )]
 #[Index(
+    name: 'index_like_search_sorting',
     columns: [
         'title',
         'site_id',
@@ -93,32 +94,31 @@ use function trim;
         'created_at',
         'deleted_at',
         'password_protected',
-    ],
-    name: 'index_like_search_sorting'
+    ]
 )]
 #[Index(
-    columns: ['published_at', 'created_at'],
-    name: 'index_published_at_created_at'
+    name: 'index_published_at_created_at',
+    columns: ['published_at', 'created_at']
 )]
 #[Index(
-    columns: ['site_id'],
-    name: 'relation_posts_site_id_sites_id'
+    name: 'relation_posts_site_id_sites_id',
+    columns: ['site_id']
 )]
 #[Index(
-    columns: ['category_id'],
-    name: 'index_category_id'
+    name: 'index_category_id',
+    columns: ['category_id']
 )]
 #[Index(
-    columns: ['category_id', 'site_id'],
-    name: 'relation_posts_category_id_post_categories_id_site_id'
+    name: 'relation_posts_category_id_post_categories_id_site_id',
+    columns: ['category_id', 'site_id']
 )]
 #[Index(
-    columns: ['parent_id'],
-    name: 'relation_posts_parent_id_posts_id'
+    name: 'relation_posts_parent_id_posts_id',
+    columns: ['parent_id']
 )]
 #[Index(
-    columns: ['user_id'],
-    name: 'relation_posts_user_id_admins_id'
+    name: 'relation_posts_user_id_admins_id',
+    columns: ['user_id']
 )]
 #[HasLifecycleCallbacks]
 class Post extends AbstractEntity implements AvailabilityStatusEntityInterface
@@ -740,10 +740,12 @@ class Post extends AbstractEntity implements AvailabilityStatusEntityInterface
                 $qb->set('x.category_id', ':cat_id');
                 $args['cat_id'] = null;
             }
+            foreach ($args as $key => $value) {
+                $qb->setParameter($key, $value);
+            }
             // use query builder to make sure updated_at still same
             $qb
                 ->where('x.id = :id')
-                ->setParameters($args)
                 ->getQuery()
                 ->execute();
         }

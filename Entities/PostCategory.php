@@ -58,24 +58,24 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
     columns: ['slug', 'site_id']
 )]
 #[Index(
-    columns: ['id', 'site_id'],
-    name: 'index_id_site_id'
+    name: 'index_id_site_id',
+    columns: ['id', 'site_id']
 )]
 #[Index(
-    columns: ['name', 'site_id'],
-    name: 'index_name_site_id'
+    name: 'index_name_site_id',
+    columns: ['name', 'site_id']
 )]
 #[Index(
-    columns: ['site_id'],
-    name: 'relation_post_categories_site_id_sites_id'
+    name: 'relation_post_categories_site_id_sites_id',
+    columns: ['site_id']
 )]
 #[Index(
-    columns: ['parent_id'],
-    name: 'relation_post_categories_parent_id_post_categories_id'
+    name: 'relation_post_categories_parent_id_post_categories_id',
+    columns: ['parent_id']
 )]
 #[Index(
-    columns: ['user_id'],
-    name: 'relation_post_categories_user_id_admins_id'
+    name: 'relation_post_categories_user_id_admins_id',
+    columns: ['user_id']
 )]
 #[HasLifecycleCallbacks]
 class PostCategory extends AbstractEntity
